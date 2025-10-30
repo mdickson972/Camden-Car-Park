@@ -2,7 +2,7 @@
 {
     public class Vehicle
     {
-        public required int VehicleId { get; set; }
+        public int VehicleId { get; set; }
 
         public required string RegistrationNumber { get; set; }
 

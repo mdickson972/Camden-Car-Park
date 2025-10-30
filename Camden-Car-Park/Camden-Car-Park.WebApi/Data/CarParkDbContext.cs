@@ -5,7 +5,7 @@ namespace Camden_Car_Park.WebApi.Data;
 
 public class CarParkDbContext : DbContext
 {
-    public CarParkDbContext(DbContextOptions<CarParkDbContext> options) 
+    public CarParkDbContext(DbContextOptions<CarParkDbContext> options)
         : base(options)
     {
     }
@@ -15,4 +15,19 @@ public class CarParkDbContext : DbContext
     public DbSet<Vehicle> Vehicles { get; set; }
 
     public DbSet<Booking> Bookings { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Employee>()
+        .Property(b => b.EmployeeId)
+        .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Vehicle>()
+        .Property(b => b.VehicleId)
+        .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Booking>()
+        .Property(b => b.BookingId)
+        .ValueGeneratedOnAdd();
+    }
 }
