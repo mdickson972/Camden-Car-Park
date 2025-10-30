@@ -1,5 +1,6 @@
 using Camden_Car_Park.WebApi.Data;
 using Camden_Car_Park.WebApi.Repositories;
+using Camden_Car_Park.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,9 @@ builder.Services.AddDbContext<CarParkDbContext>(options =>
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+
+// Dependency Injection for Services
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

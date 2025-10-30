@@ -15,12 +15,12 @@ namespace Camden_Car_Park.WebApi.Repositories
 
         public async Task<Booking?> GetBookingAsync(int id)
         {
-            return await _dbContext.Bookings.FirstOrDefaultAsync(b => b.BookingId == id);
+            return await GetBookingsAsync().FirstOrDefaultAsync(b => b.BookingId == id);
         }
 
         public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
         {
-            return await _dbContext.Bookings.ToListAsync();
+            return await GetBookingsAsync().ToListAsync();
         }
 
         public async Task AddBookingAsync(Booking booking)
@@ -39,6 +39,13 @@ namespace Camden_Car_Park.WebApi.Repositories
         {
             _dbContext.Bookings.Remove(booking);
             await _dbContext.SaveChangesAsync();
+        }
+
+        private IQueryable<Booking> GetBookingsAsync()
+        {
+            return _dbContext.Bookings
+                    .Include(i => i.Employee)
+                    .Include(i => i.Vehicle).AsQueryable();
         }
     }
 }
