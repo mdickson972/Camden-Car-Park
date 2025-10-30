@@ -1,0 +1,6 @@
+@Camden_Car_Park.WebApi_HostAddress = http://localhost:5147
+
+GET {{Camden_Car_Park.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
