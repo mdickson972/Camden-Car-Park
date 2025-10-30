@@ -37,6 +37,10 @@ namespace Camden_Car_Park.WebApi.Migrations
 
                     b.HasKey("BookingId");
 
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("VehicleId");
+
                     b.ToTable("Bookings");
                 });
 
@@ -84,6 +88,25 @@ namespace Camden_Car_Park.WebApi.Migrations
                     b.HasKey("VehicleId");
 
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Camden_Car_Park.WebApi.Data.Tables.Booking", b =>
+                {
+                    b.HasOne("Camden_Car_Park.WebApi.Data.Tables.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Camden_Car_Park.WebApi.Data.Tables.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Vehicle");
                 });
 #pragma warning restore 612, 618
         }
