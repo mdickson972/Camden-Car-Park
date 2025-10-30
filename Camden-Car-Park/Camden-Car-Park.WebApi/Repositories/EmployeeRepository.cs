@@ -1,5 +1,6 @@
 ﻿using Camden_Car_Park.WebApi.Data;
 using Camden_Car_Park.WebApi.Data.Tables;
+using Microsoft.EntityFrameworkCore;
 
 namespace Camden_Car_Park.WebApi.Repositories
 {
@@ -12,9 +13,14 @@ namespace Camden_Car_Park.WebApi.Repositories
             _dbContext = dbContext;
         }
 
-        public Employee? GetEmployee(int id)
+        public async Task<Employee?> GetEmployeeAsync(int id)
         {
-            return _dbContext.Employees.FirstOrDefault(e => e.EmployeeId == id);
+            return await _dbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+        }
+
+        public async Task<IEnumerable<Employee>> GetAllEmployeesAsync()
+        {
+            return await _dbContext.Employees.ToListAsync();
         }
     }
 }

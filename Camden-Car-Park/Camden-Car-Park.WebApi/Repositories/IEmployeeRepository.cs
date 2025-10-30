@@ -4,6 +4,7 @@ namespace Camden_Car_Park.WebApi.Repositories
 {
     public interface IEmployeeRepository
     {
-        Employee? GetEmployee(int id);
+        Task<Employee?> GetEmployeeAsync(int id);
+        Task<IEnumerable<Employee>> GetAllEmployeesAsync();
     }
 }
