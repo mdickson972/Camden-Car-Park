@@ -18,6 +18,8 @@ builder.Services.AddDbContext<CarParkDbContext>(options =>
 
 // Dependency Injection for Repositories
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 
 var app = builder.Build();
 
