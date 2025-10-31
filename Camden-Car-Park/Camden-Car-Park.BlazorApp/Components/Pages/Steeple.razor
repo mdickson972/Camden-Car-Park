@@ -26,7 +26,7 @@
         @foreach (var booking in bookings)
         {
             <tr>
-                <td>@booking.EmployeeId</td>
+                <td>@employees.First(x => x.EmployeeId == @booking.EmployeeId).Name</td>
                 <td>@booking.VehicleRegistrationNumber</td>
                 <td>@booking.VehicleMake</td>
                 <td>@booking.VehicleModel</td>
@@ -58,8 +58,13 @@
 @code {
     private IEnumerable<EmployeeBooking> bookings = [];
 
+    private IEnumerable<Employee> employees = [];
+
     protected override async Task OnInitializedAsync()
     {
+        var employeesResponse = await Http.GetFromJsonAsync<IEnumerable<Employee>>("Employee/GetAllEmployees");
+        employees = employeesResponse ?? [];
+
         var bookingsResponse = await Http.GetFromJsonAsync<IEnumerable<EmployeeBooking>>("Booking/GetBookings");
         bookings = bookingsResponse ?? [];
     }
