@@ -6,3 +6,7 @@ Camden-Car-Park/Camden-Car-Park.WebApi/obj/
 Camden-Car-Park/.vs/
 /Camden-Car-Park/Camden-Car-Park.WebApi/carpark.db-wal
 /Camden-Car-Park/Camden-Car-Park.WebApi/carpark.db-shm
+
+Camden-Car-Park/Camden-Car-Park.BlazorApp/bin/
+
+Camden-Car-Park/Camden-Car-Park.BlazorApp/obj/
