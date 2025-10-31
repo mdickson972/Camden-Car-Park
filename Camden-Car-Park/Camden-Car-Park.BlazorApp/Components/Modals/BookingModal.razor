@@ -1,0 +1,39 @@
+﻿@using Camden_Car_Park.Common.Models.ReadModels
+@inherits ComponentBase
+
+@if (IsVisible)
+{
+    <div class="modal-backdrop" @onclick="Close">
+        <div class="modal-content" @onclick:stopPropagation>
+            <h4>@Item?.VehicleMake @Item?.VehicleModel</h4>
+            <p><b>Employee:</b> @Item?.EmployeeName</p>
+            <p><b>Registration:</b> @Item?.VehicleRegistrationNumber</p>
+            <p><b>Colour:</b> @Item?.VehicleColour</p>
+            <p><b>Year:</b> @Item?.VehicleYear</p>
+            <p><b>Approved:</b> @Item?.ApprovalStatus</p>
+            <p><b>Date Approved:</b> @Item?.ApprovalDate.ToShortDateString()</p>
+
+            <div class="text-end mt-3">
+                <button class="btn btn-secondary" @onclick="Close">Close</button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public BookingResponse? Item { get; set; }
+    public bool IsVisible { get; private set; }
+
+    public void Open(BookingResponse? item)
+    {
+        Item = item;
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private void Close()
+    {
+        IsVisible = false;
+        StateHasChanged();
+    }
+}
