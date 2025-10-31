@@ -1,0 +1,17 @@
+[
+  {
+    "Name": "Complete",
+    "Projects": [
+      {
+        "Path": "Camden-Car-Park.WebApi\\Camden-Car-Park.WebApi.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      },
+      {
+        "Path": "Camden-Car-Park.BlazorApp\\Camden-Car-Park.BlazorApp.csproj",
+        "Action": "Start",
+        "DebugTarget": "https"
+      }
+    ]
+  }
+]
