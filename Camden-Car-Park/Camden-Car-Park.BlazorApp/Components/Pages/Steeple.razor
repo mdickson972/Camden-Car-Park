@@ -1,7 +1,23 @@
 ﻿@page "/steeple"
+@inject HttpClient Http
 
 <PageTitle>Steeple</PageTitle>
 
 <h1>Steeple Location Booking</h1>
 
 <p>Welcome to the Steeple location booking page!</p>
+
+@foreach (var booking in bookings)
+{
+    <li>@booking</li>
+}
+
+@code {
+    private object[] bookings = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var bookingsResponse = await Http.GetFromJsonAsync<object[]>("api/Booking/GetBookings");
+        bookings = bookingsResponse ?? [];
+    }
+}
