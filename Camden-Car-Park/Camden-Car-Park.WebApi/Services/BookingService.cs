@@ -8,16 +8,13 @@ namespace Camden_Car_Park.WebApi.Services
     {
         private readonly IBookingRepository _bookingRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IVehicleRepository _vehicleRepository;
 
         public BookingService(
             IBookingRepository bookingRepository,
-            IEmployeeRepository employeeRepository,
-            IVehicleRepository vehicleRepository)
+            IEmployeeRepository employeeRepository)
         {
             _bookingRepository = bookingRepository;
             _employeeRepository = employeeRepository;
-            _vehicleRepository = vehicleRepository;
         }
 
         public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
@@ -34,30 +31,19 @@ namespace Camden_Car_Park.WebApi.Services
         {
             var employee = await _employeeRepository.GetEmployeeAsync(employeeBooking.EmployeeId);
 
-            var vehicle = await _vehicleRepository.GetVehicleAsync(employeeBooking.VehicleRegistrationNumber);
-            // If vehicle does not exist, create a new one
-            if (vehicle == null)
-            {
-                vehicle = new Vehicle
-                {
-                    RegistrationNumber = employeeBooking.VehicleRegistrationNumber,
-                    Make = employeeBooking.VehicleMake,
-                    Model = employeeBooking.VehicleModel,
-                    Colour = employeeBooking.VehicleColour,
-                    Year = employeeBooking.VehicleYear
-                };
-
-                await _vehicleRepository.AddVehicleAsync(vehicle);
-            }
-
             var booking = new Booking
             {
                 BookingId = employeeBooking.BookingId,
                 Employee = employee,
-                Vehicle = vehicle,
+                RegistrationNumber = employeeBooking.VehicleRegistrationNumber,
+                Make = employeeBooking.VehicleMake,
+                Model = employeeBooking.VehicleModel,
+                Colour = employeeBooking.VehicleColour,
+                Year = employeeBooking.VehicleYear,
                 ApprovalStatus = employeeBooking.ApprovalStatus,
                 ApprovalDate = employeeBooking.ApprovalDate
             };
+
             await _bookingRepository.AddBookingAsync(booking);
         }
     }

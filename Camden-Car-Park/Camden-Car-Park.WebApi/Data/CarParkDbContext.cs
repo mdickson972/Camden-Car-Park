@@ -12,18 +12,12 @@ public class CarParkDbContext : DbContext
 
     public DbSet<Employee> Employees { get; set; }
 
-    public DbSet<Vehicle> Vehicles { get; set; }
-
     public DbSet<Booking> Bookings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Employee>()
         .Property(b => b.EmployeeId)
-        .ValueGeneratedOnAdd();
-
-        modelBuilder.Entity<Vehicle>()
-        .Property(b => b.VehicleId)
         .ValueGeneratedOnAdd();
 
         modelBuilder.Entity<Booking>()

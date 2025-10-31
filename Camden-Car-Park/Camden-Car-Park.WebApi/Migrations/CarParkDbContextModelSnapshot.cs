@@ -29,17 +29,32 @@ namespace Camden_Car_Park.WebApi.Migrations
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Colour")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Make")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Year")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("BookingId");
 
                     b.HasIndex("EmployeeId");
-
-                    b.HasIndex("VehicleId");
 
                     b.ToTable("Bookings");
                 });
@@ -59,37 +74,6 @@ namespace Camden_Car_Park.WebApi.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Camden_Car_Park.WebApi.Data.Tables.Vehicle", b =>
-                {
-                    b.Property<int>("VehicleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Colour")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Make")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RegistrationNumber")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Year")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("VehicleId");
-
-                    b.ToTable("Vehicles");
-                });
-
             modelBuilder.Entity("Camden_Car_Park.WebApi.Data.Tables.Booking", b =>
                 {
                     b.HasOne("Camden_Car_Park.WebApi.Data.Tables.Employee", "Employee")
@@ -98,15 +82,7 @@ namespace Camden_Car_Park.WebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Camden_Car_Park.WebApi.Data.Tables.Vehicle", "Vehicle")
-                        .WithMany()
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Employee");
-
-                    b.Navigation("Vehicle");
                 });
 #pragma warning restore 612, 618
         }

@@ -45,7 +45,7 @@ namespace Camden_Car_Park.WebApi.Repositories
         {
             return _dbContext.Bookings
                     .Include(i => i.Employee)
-                    .Include(i => i.Vehicle).AsQueryable();
+                    .AsQueryable();
         }
     }
 }
