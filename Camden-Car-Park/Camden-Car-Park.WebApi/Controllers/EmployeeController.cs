@@ -1,3 +1,4 @@
+using Camden_Car_Park.Common.Models.Models;
 using Camden_Car_Park.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +15,17 @@ namespace Camden_Car_Park.WebApi.Controllers
             _employeeRepository = employeeRepository;
         }
 
-        [HttpGet("GetEmployee")]
-        public async Task<IResult> Get(int employeeId)
-        {
-            var employee = await _employeeRepository.GetEmployeeAsync(employeeId);
-
-            return employee != null ? Results.Ok(employee) : Results.NotFound();
-        }
-
-        [HttpGet("GetAllEmployees")]
-        public async Task<IResult> GetAllEmployees()
+        [HttpGet("GetEmployeesList")]
+        public async Task<IResult> GetEmployeesList()
         {
             var employees = await _employeeRepository.GetAllEmployeesAsync();
+            var employeesList = employees.Select(e => new EmployeeListItem
+            {
+                Id = e.EmployeeId,
+                Name = e.Name
+            });
 
-            return employees != null ? Results.Ok(employees) : Results.NotFound();
+            return employeesList != null ? Results.Ok(employeesList) : Results.NotFound();
         }
     }
 }

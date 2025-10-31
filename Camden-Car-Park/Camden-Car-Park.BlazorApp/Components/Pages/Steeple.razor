@@ -1,6 +1,7 @@
 @page "/steeple"
 @using Camden_Car_Park.BlazorApp.Components.Modals
 @using Camden_Car_Park.Common.Models.Enums
+@using Camden_Car_Park.Common.Models.Models
 @using Camden_Car_Park.Common.Models.ReadModels
 @inject HttpClient Http
 
@@ -48,11 +49,14 @@
 
 @code {
     private IEnumerable<BookingResponse> bookings = [];
+    private IEnumerable<EmployeeListItem> employeesList = [];
+
     private BookingModal bookingModal;
 
     protected override async Task OnInitializedAsync()
     {
         await LoadBookings();
+        employeesList = await Http.GetFromJsonAsync<IEnumerable<EmployeeListItem>>("Employee/GetEmployeesList") ?? [];        
     }
 
     private async Task LoadBookings()
@@ -88,11 +92,11 @@
 
     public void AddBooking()
     {
-        bookingModal.Open(null);
+        bookingModal.Open(null, employeesList);
     }
 
     public void EditBooking(BookingResponse booking)
     {
-        bookingModal.Open(booking);
+        bookingModal.Open(booking, employeesList);
     }
 }
