@@ -1,4 +1,7 @@
-﻿@using Camden_Car_Park.Common.Models.ReadModels
+﻿@using Camden_Car_Park.Common.Models.Enums
+@using Camden_Car_Park.Common.Models.ReadModels
+@using Camden_Car_Park.Common.Utilities.ExtensionMethods
+@inject HttpClient Http
 @inherits ComponentBase
 
 @if (IsVisible)
@@ -6,14 +9,60 @@
     <div class="modal-backdrop" @onclick="Close">
         <div class="modal-content" @onclick:stopPropagation>
             <h4>@Item?.VehicleMake @Item?.VehicleModel</h4>
-            <p><b>Employee:</b> @Item?.EmployeeName</p>
-            <p><b>Registration:</b> @Item?.VehicleRegistrationNumber</p>
-            <p><b>Colour:</b> @Item?.VehicleColour</p>
-            <p><b>Year:</b> @Item?.VehicleYear</p>
-            <p><b>Approved:</b> @Item?.ApprovalStatus</p>
-            <p><b>Date Approved:</b> @Item?.ApprovalDate.ToShortDateString()</p>
+
+            <h4>Employee Details</h4>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Employee:</b></label>
+                <input type="text" class="form-control" @bind="Item!.EmployeeId" />
+            </div>
+
+            <h4>Vehicle Details</h4>
+            
+            <div class="mb-3">
+                <label class="form-label"><b>Registration:</b></label>
+                <input type="text" class="form-control" @bind="Item!.VehicleRegistrationNumber" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Make:</b></label>
+                <input type="text" class="form-control" @bind="Item!.VehicleMake" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Model:</b></label>
+                <input type="text" class="form-control" @bind="Item!.VehicleModel" />
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label"><b>Colour:</b></label>
+                <input type="text" class="form-control" @bind="Item!.VehicleColour" />
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label"><b>Year:</b></label>
+                <input type="text" class="form-control" @bind="Item!.VehicleYear" />
+            </div>
+
+            <h4>Booking Details</h4>
+
+            <div class="mb-3">
+                <label class="form-label"><b>Approved:</b></label>
+                <select class="form-select" @bind="Item!.ApprovalStatus">
+                    @foreach (var status in Enum.GetValues<ApprovalStatus>())
+                    {
+                        <option value="@status">@status</option>
+                    }
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label"><b>Date Approved:</b></label>
+                <input type="date" class="form-control" @bind="Item!.ApprovalDate" />
+            </div>
 
             <div class="text-end mt-3">
+                <button class="btn btn-primary" @onclick="Save">Save</button>
                 <button class="btn btn-secondary" @onclick="Close">Close</button>
             </div>
         </div>
@@ -21,19 +70,50 @@
 }
 
 @code {
-    [Parameter] public BookingResponse? Item { get; set; }
+    [Parameter] public BookingModalViewModel? Item { get; set; }
+    [Parameter] public EventCallback OnModalClosed { get; set; }
+    
     public bool IsVisible { get; private set; }
 
-    public void Open(BookingResponse? item)
+    public void Open(BookingResponse? model)
     {
-        Item = item;
+        Item = model.ToBookingModalViewModel() ?? new BookingModalViewModel();
         IsVisible = true;
         StateHasChanged();
     }
 
-    private void Close()
+    private async Task Close()
     {
         IsVisible = false;
         StateHasChanged();
+        await OnModalClosed.InvokeAsync();
+    }
+
+    private async Task Save()
+    {
+        if(Item is null)
+        {
+            return;
+        }
+
+        var request = new BookingRequest()
+        {
+            BookingId = Item.BookingId,
+            EmployeeId = Item.EmployeeId,
+            VehicleRegistrationNumber = Item.VehicleRegistrationNumber,
+            VehicleMake = Item.VehicleMake,
+            VehicleModel = Item.VehicleModel,
+            VehicleColour = Item.VehicleColour,
+            VehicleYear = Item.VehicleYear,
+            ApprovalStatus = Item.ApprovalStatus,
+            ApprovalDate = Item.ApprovalDate
+        };
+
+        var postBookingResponse = Item.BookingId == 0
+        ? await Http.PostAsJsonAsync("Booking/AddBooking", request)
+        : await Http.PostAsJsonAsync("Booking/UpdateBooking", request);
+
+        postBookingResponse.EnsureSuccessStatusCode();
+        await Close();
     }
 }

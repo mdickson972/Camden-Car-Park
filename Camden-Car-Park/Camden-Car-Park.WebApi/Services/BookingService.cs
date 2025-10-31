@@ -63,7 +63,6 @@ namespace Camden_Car_Park.WebApi.Services
 
             var booking = new Booking
             {
-                BookingId = employeeBooking.BookingId,
                 Employee = employee,
                 RegistrationNumber = employeeBooking.VehicleRegistrationNumber,
                 Make = employeeBooking.VehicleMake,
@@ -75,6 +74,26 @@ namespace Camden_Car_Park.WebApi.Services
             };
 
             await _bookingRepository.AddBookingAsync(booking);
+        }
+
+        public async Task UpdateBookingAsync(BookingRequest employeeBooking)
+        {
+            var employee = await _employeeRepository.GetEmployeeAsync(employeeBooking.EmployeeId);
+
+            var booking = new Booking
+            {
+                BookingId = employeeBooking.BookingId,
+                Employee = employee,
+                RegistrationNumber = employeeBooking.VehicleRegistrationNumber,
+                Make = employeeBooking.VehicleMake,
+                Model = employeeBooking.VehicleModel,
+                Colour = employeeBooking.VehicleColour,
+                Year = employeeBooking.VehicleYear,
+                ApprovalStatus = employeeBooking.ApprovalStatus,
+                ApprovalDate = employeeBooking.ApprovalDate
+            };
+
+            await _bookingRepository.UpdateBookingAsync(booking);
         }
     }
 }

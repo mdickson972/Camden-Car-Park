@@ -7,5 +7,6 @@ namespace Camden_Car_Park.WebApi.Services
         Task<IEnumerable<BookingResponse>> GetAllBookingsAsync();
         Task<BookingResponse?> GetBookingAsync(int bookingId);
         Task CreateBookingAsync(BookingRequest employeeBooking);
+        Task UpdateBookingAsync(BookingRequest employeeBooking);
     }
 }

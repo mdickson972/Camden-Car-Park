@@ -35,12 +35,6 @@ namespace Camden_Car_Park.WebApi.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteBookingAsync(Booking booking)
-        {
-            _dbContext.Bookings.Remove(booking);
-            await _dbContext.SaveChangesAsync();
-        }
-
         private IQueryable<Booking> GetBookingsAsync()
         {
             return _dbContext.Bookings

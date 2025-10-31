@@ -10,7 +10,7 @@
 
 <p>Welcome to the Steeple location booking page!</p>
 
-<a id="new-booking-btn" type="button" class="btn btn-primary" @onclick="OpenModal">
+<a id="new-booking-btn" type="button" class="btn btn-primary" @onclick="AddBooking">
     <i class="bi bi-plus-circle"></i> New Booking
 </a>
 
@@ -30,7 +30,7 @@
     <tbody>
         @foreach (var booking in bookings)
         {
-            <tr>
+            <tr @onclick="() => EditBooking(booking)">
                 <td>@booking.EmployeeName</td>
                 <td>@booking.VehicleRegistrationNumber</td>
                 <td>@booking.VehicleMake</td>
@@ -44,7 +44,7 @@
     </tbody>
 </table>
 
-<BookingModal @ref=bookingModal />
+<BookingModal @ref="bookingModal" OnModalClosed="RefreshBookings" />
 
 @code {
     private IEnumerable<BookingResponse> bookings = [];
@@ -52,8 +52,19 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await LoadBookings();
+    }
+
+    private async Task LoadBookings()
+    {
         var bookingsResponse = await Http.GetFromJsonAsync<IEnumerable<BookingResponse>>("Booking/GetBookings");
         bookings = bookingsResponse ?? [];
+    }
+
+    private async Task RefreshBookings()
+    {
+        await LoadBookings();
+        StateHasChanged();
     }
 
     private RenderFragment RenderApprovalStatus(ApprovalStatus status) => __builder =>
@@ -75,9 +86,13 @@
         }
     };
 
-    public void OpenModal()
+    public void AddBooking()
     {
-        Console.WriteLine("In OpenModal");
         bookingModal.Open(null);
+    }
+
+    public void EditBooking(BookingResponse booking)
+    {
+        bookingModal.Open(booking);
     }
 }
