@@ -17,14 +17,42 @@ namespace Camden_Car_Park.WebApi.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<IEnumerable<Booking>> GetAllBookingsAsync()
+        public async Task<IEnumerable<EmployeeBooking>> GetAllBookingsAsync()
         {
-            return await _bookingRepository.GetAllBookingsAsync();
+            var bookings = await _bookingRepository.GetAllBookingsAsync();
+
+            return bookings.Select(s => new EmployeeBooking()
+            {
+                BookingId = s.BookingId,
+                EmployeeId = s.Employee.EmployeeId,
+                VehicleRegistrationNumber = s.RegistrationNumber,
+                VehicleMake = s.Make,
+                VehicleModel = s.Model,
+                VehicleColour = s.Colour,
+                VehicleYear = s.Year,
+                ApprovalStatus = s.ApprovalStatus,
+                ApprovalDate = s.ApprovalDate
+            });
         }
 
-        public async Task<Booking?> GetBookingAsync(int bookingId)
+        public async Task<EmployeeBooking?> GetBookingAsync(int bookingId)
         {
-            return await _bookingRepository.GetBookingAsync(bookingId);
+            var booking = await _bookingRepository.GetBookingAsync(bookingId);
+
+            if (booking == null) { return null; }
+
+            return new EmployeeBooking()
+            {
+                BookingId = booking.BookingId,
+                EmployeeId = booking.Employee.EmployeeId,
+                VehicleRegistrationNumber = booking.RegistrationNumber,
+                VehicleMake = booking.Make,
+                VehicleModel = booking.Model,
+                VehicleColour = booking.Colour,
+                VehicleYear = booking.Year,
+                ApprovalStatus = booking.ApprovalStatus,
+                ApprovalDate = booking.ApprovalDate
+            };
         }
 
         public async Task CreateBookingAsync(EmployeeBooking employeeBooking)

@@ -5,8 +5,8 @@ namespace Camden_Car_Park.WebApi.Services
 {
     public interface IBookingService
     {
-        Task<IEnumerable<Booking>> GetAllBookingsAsync();
-        Task<Booking?> GetBookingAsync(int bookingId);
+        Task<IEnumerable<EmployeeBooking>> GetAllBookingsAsync();
+        Task<EmployeeBooking?> GetBookingAsync(int bookingId);
         Task CreateBookingAsync(EmployeeBooking employeeBooking);
     }
 }

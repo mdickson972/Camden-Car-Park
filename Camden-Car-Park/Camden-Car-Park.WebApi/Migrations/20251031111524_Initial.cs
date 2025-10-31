@@ -74,7 +74,7 @@ namespace Camden_Car_Park.WebApi.Migrations
                 {
                     { 1, 1, "ABC 1234", "Toyota", "Camry", "Blue", "2018", 1, new DateTime(2024, 10, 1) },
                     { 2, 2, "XYZ 7890", "Honda", "Civic", "Red", "2020", 0, new DateTime(2024, 10, 2) },
-                    { 3, 3, "LMN 4567", "Ford", "Focus", "Black", "2019", 1, new DateTime(2024, 10, 3) },
+                    { 3, 3, "LMN 4567", "Ford", "Focus", "Black", "2019", 2, new DateTime(2024, 10, 3) },
                 });
         }
 

@@ -8,4 +8,8 @@
     <AssemblyName>$(AssemblyName.Replace(' ', '_'))</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Camden-Car-Park.Common\Camden-Car-Park.Common.csproj" />
+  </ItemGroup>
+
 </Project>
