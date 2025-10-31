@@ -2,7 +2,7 @@
 
 namespace Camden_Car_Park.Common.Models.ReadModels
 {
-    public class EmployeeBooking
+    public class BookingRequest
     {
         public int BookingId { get; set; }
 

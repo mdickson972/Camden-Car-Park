@@ -17,14 +17,15 @@ namespace Camden_Car_Park.WebApi.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<IEnumerable<EmployeeBooking>> GetAllBookingsAsync()
+        public async Task<IEnumerable<BookingResponse>> GetAllBookingsAsync()
         {
             var bookings = await _bookingRepository.GetAllBookingsAsync();
 
-            return bookings.Select(s => new EmployeeBooking()
+            return bookings.Select(s => new BookingResponse()
             {
                 BookingId = s.BookingId,
                 EmployeeId = s.Employee.EmployeeId,
+                EmployeeName = s.Employee.Name,
                 VehicleRegistrationNumber = s.RegistrationNumber,
                 VehicleMake = s.Make,
                 VehicleModel = s.Model,
@@ -35,16 +36,17 @@ namespace Camden_Car_Park.WebApi.Services
             });
         }
 
-        public async Task<EmployeeBooking?> GetBookingAsync(int bookingId)
+        public async Task<BookingResponse?> GetBookingAsync(int bookingId)
         {
             var booking = await _bookingRepository.GetBookingAsync(bookingId);
 
             if (booking == null) { return null; }
 
-            return new EmployeeBooking()
+            return new BookingResponse()
             {
                 BookingId = booking.BookingId,
                 EmployeeId = booking.Employee.EmployeeId,
+                EmployeeName = booking.Employee.Name,
                 VehicleRegistrationNumber = booking.RegistrationNumber,
                 VehicleMake = booking.Make,
                 VehicleModel = booking.Model,
@@ -55,7 +57,7 @@ namespace Camden_Car_Park.WebApi.Services
             };
         }
 
-        public async Task CreateBookingAsync(EmployeeBooking employeeBooking)
+        public async Task CreateBookingAsync(BookingRequest employeeBooking)
         {
             var employee = await _employeeRepository.GetEmployeeAsync(employeeBooking.EmployeeId);
 

@@ -26,29 +26,13 @@
         @foreach (var booking in bookings)
         {
             <tr>
-                <td>@employees.First(x => x.EmployeeId == @booking.EmployeeId).Name</td>
+                <td>@booking.EmployeeName</td>
                 <td>@booking.VehicleRegistrationNumber</td>
                 <td>@booking.VehicleMake</td>
                 <td>@booking.VehicleModel</td>
                 <td>@booking.VehicleColour</td>
                 <td>@booking.VehicleYear</td>
-                <td>
-                    @switch (booking.ApprovalStatus)
-                    {
-                        case ApprovalStatus.Approved:
-                            <span class="badge bg-success">Approved</span>
-                            break;
-                        case ApprovalStatus.Pending:
-                            <span class="badge bg-primary">Pending</span>
-                            break;
-                        case ApprovalStatus.Cancelled:
-                            <span class="badge bg-secondary">Cancelled</span>
-                            break;
-                        default:
-                            <span class="badge bg-secondary">Unknown</span>
-                            break;
-                    }
-                </td>
+                <td>@RenderApprovalStatus(booking.ApprovalStatus)</td>
                 <td>@booking.ApprovalDate</td>
             </tr>
         }
@@ -56,16 +40,30 @@
 </table>
 
 @code {
-    private IEnumerable<EmployeeBooking> bookings = [];
-
-    private IEnumerable<Employee> employees = [];
+    private IEnumerable<BookingResponse> bookings = [];
 
     protected override async Task OnInitializedAsync()
     {
-        var employeesResponse = await Http.GetFromJsonAsync<IEnumerable<Employee>>("Employee/GetAllEmployees");
-        employees = employeesResponse ?? [];
-
-        var bookingsResponse = await Http.GetFromJsonAsync<IEnumerable<EmployeeBooking>>("Booking/GetBookings");
+        var bookingsResponse = await Http.GetFromJsonAsync<IEnumerable<BookingResponse>>("Booking/GetBookings");
         bookings = bookingsResponse ?? [];
     }
+
+    private RenderFragment RenderApprovalStatus(ApprovalStatus status) => __builder =>
+    {
+        switch (status)
+        {
+            case ApprovalStatus.Approved:
+                <span class="badge bg-success">Approved</span>
+                break;
+            case ApprovalStatus.Pending:
+                <span class="badge bg-primary">Pending</span>
+                break;
+            case ApprovalStatus.Cancelled:
+                <span class="badge bg-secondary">Cancelled</span>
+                break;
+            default:
+                <span class="badge bg-secondary">Unknown</span>
+                break;
+        }
+    };
 }

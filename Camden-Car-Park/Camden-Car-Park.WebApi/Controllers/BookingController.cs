@@ -25,7 +25,7 @@ namespace Camden_Car_Park.WebApi.Controllers
 
 
         [HttpPost("AddBooking")]
-        public async Task<IResult> Post([FromBody] EmployeeBooking employeeBooking)
+        public async Task<IResult> Post([FromBody] BookingRequest employeeBooking)
         {
             await _bookingService.CreateBookingAsync(employeeBooking);
             return Results.Ok();
