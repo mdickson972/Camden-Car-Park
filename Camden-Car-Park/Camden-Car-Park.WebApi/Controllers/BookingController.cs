@@ -1,4 +1,4 @@
-﻿using Camden_Car_Park.WebApi.Models.ReadModels;
+﻿using Camden_Car_Park.Common.Models.ReadModels;
 using Camden_Car_Park.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 

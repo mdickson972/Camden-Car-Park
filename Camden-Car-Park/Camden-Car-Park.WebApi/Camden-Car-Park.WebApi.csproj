@@ -20,4 +20,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Camden-Car-Park.Common\Camden-Car-Park.Common.csproj" />
+  </ItemGroup>
+
 </Project>

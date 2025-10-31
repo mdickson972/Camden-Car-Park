@@ -1,4 +1,4 @@
-﻿namespace Camden_Car_Park.WebApi.Models.Enums
+﻿namespace Camden_Car_Park.Common.Models.Enums
 {
     public enum ApprovalStatus
     {

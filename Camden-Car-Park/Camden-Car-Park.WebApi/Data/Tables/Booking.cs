@@ -1,4 +1,4 @@
-﻿using Camden_Car_Park.WebApi.Models.Enums;
+﻿using Camden_Car_Park.Common.Models.Enums;
 
 namespace Camden_Car_Park.WebApi.Data.Tables
 {

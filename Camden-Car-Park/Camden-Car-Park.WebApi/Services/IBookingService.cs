@@ -1,5 +1,5 @@
-﻿using Camden_Car_Park.WebApi.Data.Tables;
-using Camden_Car_Park.WebApi.Models.ReadModels;
+﻿using Camden_Car_Park.Common.Models.ReadModels;
+using Camden_Car_Park.WebApi.Data.Tables;
 
 namespace Camden_Car_Park.WebApi.Services
 {
