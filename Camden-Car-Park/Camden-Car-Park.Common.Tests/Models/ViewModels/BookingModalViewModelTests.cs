@@ -67,7 +67,7 @@ namespace Camden_Car_Park.Common.Tests.Models.ViewModels
             var model = new BookingModalViewModel
             {
                 EmployeeId = 1,
-                VehicleRegistrationNumber = "ABC123",
+                VehicleRegistrationNumber = "ABC 123",
                 VehicleMake = "Ford",
                 VehicleModel = "Focus",
                 VehicleColour = "Red",
@@ -173,9 +173,7 @@ namespace Camden_Car_Park.Common.Tests.Models.ViewModels
 
         [Test]
         [TestCase("AB12 CDE", Description = "Current format")]
-        [TestCase("AB12CDE", Description = "Current format without space")]
         [TestCase("ABC 1234", Description = "Prefix format with space")]
-        [TestCase("ABC1234", Description = "Prefix format without space")]
         [TestCase("A123 BCD", Description = "Prefix format variation")]
         [TestCase("A1 BCD", Description = "Short prefix format")]
         public void Validate_VehicleRegistrationNumberValidFormats_PassesValidation(string registrationNumber)

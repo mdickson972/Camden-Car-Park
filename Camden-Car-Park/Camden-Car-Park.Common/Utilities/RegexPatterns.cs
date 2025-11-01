@@ -2,6 +2,6 @@
 {
     public static class RegexPatterns
     {
-        public const string UkVehicleRegistrationNumber = @"^(?:[A-Z]{2}\d{2}\s?[A-Z]{3}|[A-Z]\d{1,3}\s?[A-Z]{3}|[A-Z]{3}\s?\d{1,3}[A-Z]?|[A-Z]{1,3}\s?\d{1,4}|\d{1,4}\s?[A-Z]{1,3}|[A-Z]{1,2}\s?\d{1,4}\s?[A-Z]{1,3})$";
+        public const string UkVehicleRegistrationNumber = @"^(?:[A-Z]{2,4}\s\d{3,4}|[A-Z]*\d+[A-Z]*\s[A-Z]{3,4})$";
     }
 }
