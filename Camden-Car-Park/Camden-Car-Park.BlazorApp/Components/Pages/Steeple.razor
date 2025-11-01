@@ -26,12 +26,13 @@
             <th>Year</th>
             <th>Status</th>
             <th>Date Approved</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var booking in bookings)
         {
-            <tr @onclick="() => EditBooking(booking)">
+            <tr>
                 <td>@booking.EmployeeName</td>
                 <td>@booking.VehicleRegistrationNumber</td>
                 <td>@booking.VehicleMake</td>
@@ -40,6 +41,11 @@
                 <td>@booking.VehicleYear</td>
                 <td>@RenderApprovalStatus(booking.ApprovalStatus)</td>
                 <td>@booking.ApprovalDate</td>
+                <td>
+                    <a id="edit-booking-btn" type="button" class="btn btn-secondary" @onclick="() => EditBooking(booking)">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
