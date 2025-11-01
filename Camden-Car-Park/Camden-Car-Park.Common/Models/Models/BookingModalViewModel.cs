@@ -1,4 +1,5 @@
 ﻿using Camden_Car_Park.Common.Models.Enums;
+using Camden_Car_Park.Common.Utilities;
 using System.ComponentModel.DataAnnotations;
 
 namespace Camden_Car_Park.Common.Models.ReadModels
@@ -12,6 +13,7 @@ namespace Camden_Car_Park.Common.Models.ReadModels
         public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "Please enter a registration number.")]
+        [RegularExpression(RegexPatterns.UkVehicleRegistrationNumber, ErrorMessage = "Please enter a valid UK registration number (e.g., ABC 1234, AB12 CDE, A12 BCD).")]
         public string VehicleRegistrationNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Please enter a vehicle make.")]
@@ -19,13 +21,13 @@ namespace Camden_Car_Park.Common.Models.ReadModels
 
         [Required(ErrorMessage = "Please enter a vehicle model.")]
         public string VehicleModel { get; set; } = string.Empty;
-        
+
         [Required(ErrorMessage = "Please enter a vehicle colour.")]
         public string VehicleColour { get; set; } = string.Empty;
-        
+
         [Required(ErrorMessage = "Please enter a vehicle year.")]
         public string VehicleYear { get; set; } = string.Empty;
-        
+
         [Required(ErrorMessage = "Please select an approval status.")]
         public ApprovalStatus? ApprovalStatus { get; set; }
 
