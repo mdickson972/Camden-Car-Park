@@ -2,7 +2,7 @@
 using Camden_Car_Park.Common.Utilities;
 using System.ComponentModel.DataAnnotations;
 
-namespace Camden_Car_Park.Common.Models.ReadModels
+namespace Camden_Car_Park.Common.Models.ViewModels
 {
     public class BookingModalViewModel
     {

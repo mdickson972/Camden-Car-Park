@@ -1,4 +1,5 @@
 ﻿using Camden_Car_Park.Common.Models.ReadModels;
+using Camden_Car_Park.Common.Models.ViewModels;
 
 namespace Camden_Car_Park.Common.Utilities.ExtensionMethods
 {
